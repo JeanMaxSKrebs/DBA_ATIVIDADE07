@@ -1,0 +1,60 @@
+{
+  "saloes": [
+    {
+      "id": 47,
+      "nome": "Fest Haus",
+      "descricao": "Salão de festa para diversos eventos",
+      "localizacao": "São Leopoldo",
+      "cnpj": "01855743000106"
+    },
+    {
+      "id": 15,
+      "nome": "a",
+      "descricao": "a",
+      "localizacao": "aaaaaaa",
+      "cnpj": "1"
+    },
+    {
+      "id": 59,
+      "nome": "saas",
+      "descricao": "sadasd",
+      "localizacao": "asdasd",
+      "cnpj": "asdsad"
+    },
+    {
+      "id": 99,
+      "nome": "saas",
+      "descricao": "sadasd",
+      "localizacao": "asdasd",
+      "cnpj": "asdsad"
+    },
+    {
+      "id": 13,
+      "nome": "a",
+      "descricao": "a",
+      "localizacao": "aaaaaaa",
+      "cnpj": "a"
+    },
+    {
+      "id": 53,
+      "nome": "a",
+      "descricao": "a",
+      "localizacao": "aaaaaaa",
+      "cnpj": "a"
+    },
+    {
+      "id": 7,
+      "nome": "a",
+      "descricao": "a",
+      "localizacao": "aaaaa",
+      "cnpj": "1"
+    },
+    {
+      "id": 58,
+      "nome": "salão de festa",
+      "descricao": "array",
+      "localizacao": "sao leo",
+      "cnpj": "12"
+    }
+  ]
+}
