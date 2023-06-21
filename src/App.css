@@ -98,6 +98,27 @@
   text-align: center;
 }
 
+.form-festas {
+  padding: 1em;
+  margin: 0 8em;
+  border-bottom: 1px solid black;
+}
+
+.form-festas .form-control::placeholder {
+  text-align: center;
+}
+
+.form-festas h2,
+.list-festas h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.form-festas input,
+.list-festas input {
+  text-align: center;
+}
+
 
 .list-saloes {
   padding: 1em;

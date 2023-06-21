@@ -1,8 +1,9 @@
 import './App.css';
 // import { useState, useEffect } from 'react'
 import FormSalao from './components/Saloes/FormSalao';
+import FormFesta from './components/Festas/FormFesta';
 import MostraSaloes from './components/Saloes/MostraSaloes';
-import LoginUsuario from './components/Login';
+import MostraFestas from './components/Festas/MostraFestas';
 import TopNav from './components/Estrutura/TopNav';
 import SideNav from './components/Estrutura/SideNav';
 import { BrowserRouter as Router, Routes, Link, Route} from 'react-router-dom';
@@ -16,17 +17,34 @@ import { BrowserRouter as Router, Routes, Link, Route} from 'react-router-dom';
         </div>
       <MostraSaloes /> 
     </>
-
-  export const Sobre = () => <>
-        <h1>Sobre</h1>
-  </>
-  export const Contato = () => <h1>Contato</h1>
-  export const Cadastro = () => <h1>Cadastro</h1>
-  export const Login = ()=>
+  export const Saloes = () =>
+    <>
+      <div className="saloes-header">
+        <h1>Salões</h1>
+      </div>
+      <MostraSaloes />
+    </>
+  export const Festas = () =>
+    <>
+      <div className="saloes-header">
+        <h1>Festas</h1>
+      </div>
+      <MostraFestas /> 
+    </>
+  export const CadastroSalao = () =>
   <>
-    <LoginUsuario /> 
+      <div className="saloes-header">
+        <h1>Cadastre Salão</h1>
+      </div>
+    <FormSalao /> 
   </>
-
+  export const CadastroFesta = () =>
+    <>
+        <div className="saloes-header">
+          <h1>Cadastre Festas</h1>
+        </div>
+      <FormFesta /> 
+    </>
 
 function App() {
   return (
@@ -46,12 +64,13 @@ function App() {
             </header>
 
             {/* Definição das rotas */}
-            <Routes>            
+            <Routes>
+              <Route path="/" element={<Home />} />        
               <Route path="/home" element={<Home />} />
-              <Route path="/sobre" element={<Sobre />} />
-              <Route path="/contato" element={<Contato />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cadastro" element={<Cadastro />} />
+              <Route path="/saloes" element={<Saloes />} />
+              <Route path="/festas" element={<Festas />} />
+              <Route path="/cadastro-festa" element={<CadastroFesta />} />
+              <Route path="/cadastro-salao" element={<CadastroSalao />} />
             </Routes>
 
             {/* Conteúdo compartilhado em todas as rotas */}

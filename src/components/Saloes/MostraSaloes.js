@@ -1,9 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import Salao from './Salao';
-import { collection, onSnapshot } from "firebase/firestore";
 import { db } from '../../firebase';
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  deleteDoc,
+  doc,
+  documentId,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where
+}   from "firebase/firestore";
+function ListFestas({ steps }) {
+    return (
+      <details style={{ display: 'inline' }}>
 
+      </details>
+    )
+  }
 
 const MostraSaloes = () => {
     const [saloes, setSaloes] = useState([]);
@@ -26,7 +44,9 @@ const MostraSaloes = () => {
 
     const unsub = onSnapshot(collectionRef, (snapshot) => {
         setSaloes(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+        // setFestas()
         setLoading(false);
+
     });
 
 
@@ -34,6 +54,28 @@ const MostraSaloes = () => {
         return <h1>Carregando... Aguarde uns Intantes</h1>;
     }
 
+    const loadFestas = (festas) => {
+        festas.forEach(festa => {
+          const festasRef = collection(db, `saloes/${festa.id}/festas`)
+          getDocs(festasRef)
+            .then(snapFestas=> {
+              if (snapFestas.empty)
+                return;
+    
+              let festas = snapFestas.docs.map(stepDoc => {
+                return { id: stepDoc.id, ...stepDoc.data() }
+              })
+    
+              let newFestas = festas.map(nfesta => {
+                if (nfesta.id === festa.id)
+                    nfesta.festas = festas
+                return nfesta
+              })
+              setSaloes(newFestas)
+            })
+            .catch(e => console.error(e.message))
+        })
+      }
 
     return (
         <div className="list-saloes">

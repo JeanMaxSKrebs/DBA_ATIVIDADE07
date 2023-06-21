@@ -5,7 +5,7 @@ import { faHouseFlag, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icon
 import perfilImg from '../../assets/img/perfil.jpg';
 import { BrowserRouter as Router, Routes, Link, Route } from 'react-router-dom';
   
-import {Home, Sobre, Contato, Login, Cadastro} from '../../App';
+import {Home, Festas, Saloes, CadastroSalao, CadastroFesta} from '../../App';
 
 
 const SideNav = () => {
@@ -27,10 +27,11 @@ const SideNav = () => {
                 <Navbar.Toggle aria-controls="navbarDiv" />
                 <Navbar.Collapse id="navbarDiv">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/login" id="loginC"element={<Login />}>Login</Nav.Link>
-                        <Nav.Link href="/cadastro" id="cadastro"element={<Cadastro />}>Cadastro</Nav.Link>
-                        <Nav.Link href="/sobre" id="sobre" element={<Sobre />}>Sobre</Nav.Link>
-                        <Nav.Link href="/contato" id="contato" element={<Contato />}>Contato</Nav.Link>
+                        <Nav.Link href="/home" id="home" element={<Home />}>Home</Nav.Link>
+                        <Nav.Link href="/saloes" id="saloes" element={<Saloes />}>Saloes</Nav.Link>
+                        <Nav.Link href="/festas" id="festas" element={<Festas />}>Festas</Nav.Link>
+                        <Nav.Link href="/cadastro-salao" id="cadastro-salao"element={<CadastroSalao />}>Cadastro Salao</Nav.Link>
+                        <Nav.Link href="/cadastro-festa" id="cadastro-festa"element={<CadastroFesta />}>Cadastro Festa</Nav.Link>
                         <Nav.Link href="https://jeanmaxskrebs.github.io/#page-top">Desenvolvedor</Nav.Link>
                     </Nav>
 
