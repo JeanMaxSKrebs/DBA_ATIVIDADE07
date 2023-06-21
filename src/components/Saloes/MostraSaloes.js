@@ -15,17 +15,11 @@ import {
   updateDoc,
   where
 }   from "firebase/firestore";
-function ListFestas({ steps }) {
-    return (
-      <details style={{ display: 'inline' }}>
-
-      </details>
-    )
-  }
 
 const MostraSaloes = () => {
     const [saloes, setSaloes] = useState([]);
     const [loading, setLoading] = useState(0);
+    const [festas, setFestas] = useState([]);
 
     const collectionRef = collection(db, "saloes");
 
@@ -46,13 +40,43 @@ const MostraSaloes = () => {
         setSaloes(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
         // setFestas()
         setLoading(false);
-
+        loadFestas(festas)
     });
 
 
     if (loading) {
         return <h1>Carregando... Aguarde uns Intantes</h1>;
     }
+
+    const listFesta = () => {
+        getDocs(collectionRef)
+          .then(querySnap => {
+            //console.log(querySnap.docs.map(d=>d.data().todo))
+            const docs = querySnap.docs
+            if (!docs.length)
+              throw Error("Empty data!")
+    
+            const todos = docs.map(
+              doc => {
+                const todo = ({
+                  id: doc.id,
+                  // text: doc.data().text
+                  ...doc.data()
+                })
+    
+                todo.details && formatDetailsDate(todo.details)
+                todo.collabs && getCollabsEmail(todo.collabs)
+    
+                return todo;
+              })
+    
+            loadFestas(festas)
+            setTodos(todos)
+            setLoading(true)
+          }).catch(e =>
+            console.error(e)
+          );
+      }
 
     const loadFestas = (festas) => {
         festas.forEach(festa => {
