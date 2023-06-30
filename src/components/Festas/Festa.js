@@ -1,4 +1,4 @@
-import EditButton from '../Botoes/EditButton';
+import EditButtonFesta from '../Botoes/EditButtonFesta';
 import DeleteButton from '../Botoes/DeleteButton';
 
 import { Card, Col, Carousel } from 'react-bootstrap';
@@ -9,6 +9,9 @@ const Festa = (props) => {
 
     let festa = props.festa;
     let festas = props.festas
+    // console.log(festa);
+    // console.log(festas);
+
 
     return (
         <Col xs={12} md={6} lg={4} style={{ marginBottom: '20px' }}>
@@ -25,10 +28,9 @@ const Festa = (props) => {
                     <Card.Title>{festa.nome}</Card.Title>
                     <Card.Img variant="top" src={festa.imagem} />
                     <Card.Text>{festa.tipo}</Card.Text>
-                    <Card.Text>{festa.data}</Card.Text>
-                    {/* <Card.Text>{festa.nomeCliente}</Card.Text> */}
-                    {/* <Card.Text>{festa.nomeCliente}</Card.Text> */}
-                    <EditButton id={festa.id} festas={festas}></EditButton>
+                    <Card.Text>CNPJ SALÃO: {festa.cnpjSalao}</Card.Text>
+                    <Card.Text>CPF CLIENTE: {festa.cpfCliente}</Card.Text>
+                    <EditButtonFesta id={festa.id} festas={festas}></EditButtonFesta>
                     <DeleteButton id={festa.id}></DeleteButton>
                 </Card.Body>
             </Card>

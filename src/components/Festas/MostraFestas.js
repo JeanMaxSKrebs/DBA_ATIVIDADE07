@@ -12,22 +12,25 @@ const MostraFestas = () => {
     const collectionRef = collection(db, "festas");
 
     useEffect(() => {
-        const loadData = async () => {
-            setLoading(true);
-
-            const unsubscribe = () => {
-                unsub();
-            };
-            return unsubscribe;
-        };
-
         loadData();
     }, []);
 
+    const loadData = async () => {
+      setLoading(true);
+
+      const unsubscribe = () => {
+          unsub();
+      };
+      return unsubscribe;
+  };
+
+
     const unsub = onSnapshot(collectionRef, (snapshot) => {
+        // console.log('oi');
         setFestas(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
         setLoading(false);
-    });
+      });
 
 
     if (loading) {
@@ -36,18 +39,20 @@ const MostraFestas = () => {
 
 
     return (
-        <div className="list-festas">
-            {/* <h2>Lista de Salões:</h2> */}
-            {/* <Row> */}
-            <Row className="justify-content-center">
-
-                {festas.length === 0 && <p>Não Existem Salões no Banco</p>}
-                {festas.map((festa) => (
-                    <Festa key={festa.id} festa={festa} festas={festas}
-                    />
-                ))}
-            </Row>
-        </div >
+        <>
+            <div className="list-festas">
+                {/* <h2>Lista de Festas:</h2> */}
+                {/* <Row> */}
+                <Row className="justify-content-center">
+                    {/* {console.log(festas)} */}
+                    {festas.length === 0 && <p>Não Existem Festas no Banco</p>}
+                    {festas.map((festa) => (
+                        // <p>{festa.id}</p>
+                        <Festa key={festa.id} festa={festa} festas={festas}/>
+                        ))}
+                </Row>
+            </div >
+        </>
     )
 }
 

@@ -48,6 +48,15 @@
 .saloes-header h1 {
   margin: 0;
 }
+.festa {
+  background-color: #FFF34D;
+  border-radius: 5px;
+  color: #444444;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid black;
+  margin-bottom: 20px;
+}
 
 .salao {
   background-color: #FFF34D;

@@ -12,14 +12,13 @@ const FormFesta = (props) => {
 
     const [nome, setNome] = useState("")
     const [tipo, setTipo] = useState("")
-    const [data, setData] = useState("")
     const [cpf, setCpf] = useState(0)
     const [cnpj, setCnpj] = useState(0)
     const [imagem, setImagem] = useState(null);
 
     const [editMode, setEditMode] = useState(false)
 
-    const isFormValid = nome && tipo && data && cnpj && cpf;
+    const isFormValid = nome && tipo && cnpj && cpf;
 
     let festaEdit = props.festa;
 
@@ -32,9 +31,8 @@ const FormFesta = (props) => {
 
             setNome(festaEdit.nome);
             setTipo(festaEdit.tipo);
-            setData(festaEdit.data);
-            setCpf(festaEdit.cpf);
-            setCnpj(festaEdit.cnpj);
+            setCpf(festaEdit.cpfCliente);
+            setCnpj(festaEdit.cnpjSalao);
             setImagem(festaEdit.imagem);
 
         }
@@ -57,7 +55,6 @@ const FormFesta = (props) => {
         const docRef = await addDoc(collectionRef, {
             nome: nome,
             tipo: tipo,
-            data: data,
             cpfCliente: cpf,
             cnpjSalao: cnpj,
             imagem: imagem,
@@ -66,7 +63,6 @@ const FormFesta = (props) => {
 
         setNome("");
         setTipo("");
-        setData("");
         setCpf(0);
         setCnpj(0);
         setImagem("");
@@ -78,7 +74,6 @@ const FormFesta = (props) => {
         await updateDoc(doc(db, "festas", festaEdit.id), {
             nome: nome,
             tipo: tipo,
-            data: data,
             cpfCliente: cpf,
             cnpjSalao: cnpj,
             imagem: imagem,
@@ -87,7 +82,6 @@ const FormFesta = (props) => {
         setFesta({})
         setNome("");
         setTipo("");
-        setData("");
         setCpf(0);
         setCnpj(0);
         setImagem("");
@@ -98,100 +92,84 @@ const FormFesta = (props) => {
 
 
     return (
-
         <div className="form-festas">
-        <h2>Formulário</h2>
-        <Form>
-          <FormGroup>
-            <Form.Label htmlFor="nome">Nome da Festa:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="nome"
-              className="form-control"
-              placeholder="Nome"
-              onChange={(e) => setNome(e.target.value)}
-              value={nome || ""}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label htmlFor="tipo">Tipo:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="tipo"
-              className="form-control"
-              placeholder="Tipo"
-              onChange={(e) => setTipo(e.target.value)}
-              value={tipo || ""}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label htmlFor="data">Data:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="data"
-              className="form-control"
-              placeholder="Data"
-              onChange={(e) => setData(e.target.value)}
-              value={data || ""}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label htmlFor="cpf">CPF:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="cpf"
-              className="form-control"
-              placeholder="CPF"
-              onChange={(e) => setCpf(e.target.value)}
-              value={cpf || ""}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label htmlFor="cnpj">CNPJ:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="cnpj"
-              className="form-control"
-              placeholder="CNPJ"
-              onChange={(e) => setCnpj(e.target.value)}
-              value={cnpj || ""}
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Form.Label htmlFor="imagem">Imagem:</Form.Label>
-            <Form.Control
-              as="input"
-              type="text"
-              name="imagem"
-              className="form-control"
-              placeholder="Imagem"
-              onChange={(e) => setImagem(e.target.value)}
-              value={imagem || ""}
-              required
-            />
-          </FormGroup>
+          <h2>Formulário</h2>
+          <Form>
+            <FormGroup>
+              <Form.Label htmlFor="nome">Nome da Festa:</Form.Label>
+              <Form.Control
+                as="input"
+                type="text"
+                name="nome"
+                className="form-control"
+                placeholder="Nome"
+                onChange={(e) => setNome(e.target.value)}
+                value={nome || ""}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Form.Label htmlFor="tipo">Tipo:</Form.Label>
+              <Form.Control
+                as="input"
+                type="text"
+                name="tipo"
+                className="form-control"
+                placeholder="Tipo"
+                onChange={(e) => setTipo(e.target.value)}
+                value={tipo || ""}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Form.Label htmlFor="cpf">CPF:</Form.Label>
+              <Form.Control
+                as="input"
+                type="text"
+                name="cpf"
+                className="form-control"
+                placeholder="CPF"
+                onChange={(e) => setCpf(e.target.value)}
+                value={cpf || ""}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Form.Label htmlFor="cnpj">CNPJ:</Form.Label>
+              <Form.Control
+                as="input"
+                type="text"
+                name="cnpj"
+                className="form-control"
+                placeholder="CNPJ"
+                onChange={(e) => setCnpj(e.target.value)}
+                value={cnpj || ""}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+                    <Form.Label htmlFor="imagem">Imagem:</Form.Label>
+                    <Form.Control
+                        as="input"
+                        type="file"
+                        name="imagem"
+                        className="form-control"
+                        onChange={handleImagemChange}
+                        required
+                    />
+                </FormGroup>
 
-          <Button
-                type="submit"
-                onClick={editMode ? updFesta : addFesta}
-                color={editMode ? "success" : "primary"}
-                disabled={!editMode ? !isFormValid : ""}
-            >
-                {editMode ? "Edit" : "Add"} &nbsp;Festa
-            </Button>
-        </Form>
+            <Button
+                  type="submit"
+                  onClick={editMode ? updFesta : addFesta}
+                  color={editMode ? "success" : "primary"}
+                  disabled={!editMode ? !isFormValid : ""}
+              >
+                  {editMode ? "Edit" : "Add"} &nbsp;Festa
+              </Button>
+          </Form>
         
-      </div>      
+        </div>      
 
     )
 }

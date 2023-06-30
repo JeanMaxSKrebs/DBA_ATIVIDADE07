@@ -1,25 +1,29 @@
 import { Button, Modal } from 'react-bootstrap';
 import { PencilFill } from 'react-bootstrap-icons';
 import { useState } from 'react'
-import FormSalao from '../Saloes/FormSalao';
+import FormFesta from '../Festas/FormFesta';
 
-const EditButton = (props) => {
+const EditButtonFesta = (props) => {
     let id = props.id;
-    let saloes = props.saloes;
+    let festas = props.festas;
+
+    // console.log("entrou no edit festa");
+
+    // console.log(festas)
 
     const [showModal, setShowModal] = useState(false);
-    const [salaoData, setSalaoData] = useState({});
+    const [festaData, setFestaData] = useState({});
 
     const closeModal = () => {
         setShowModal(false);
     }
 
-    const handleEdit = (salaoId) => {
+    const handleEdit = (festaId) => {
         // encontra o salão com o ID correspondente
-        const salao = saloes.find(salao => salao.id === salaoId);
+        const festa = festas.find(festa => festa.id === festaId);
 
         // atualiza o estado com os dados do salão
-        setSalaoData(salao);
+        setFestaData(festa);
 
         // abre o modal
         setShowModal(true);
@@ -32,12 +36,12 @@ const EditButton = (props) => {
                 Editar
             </Button>
 
-            <Modal className='modalSalao' show={showModal} onHide={() => setShowModal(false)}>
+            <Modal className='modalfesta' show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar Salão</Modal.Title>
+                    <Modal.Title>Editar Festa</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormSalao className='dados' salao={salaoData} onCloseModal={closeModal}/>
+                    <FormFesta className='dados' festa={festaData} onCloseModal={closeModal}/>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -50,4 +54,4 @@ const EditButton = (props) => {
     )
 }
 
-export default EditButton;
+export default EditButtonFesta;

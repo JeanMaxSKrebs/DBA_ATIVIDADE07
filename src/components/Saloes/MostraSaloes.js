@@ -19,28 +19,28 @@ import {
 const MostraSaloes = () => {
     const [saloes, setSaloes] = useState([]);
     const [loading, setLoading] = useState(0);
-    const [festas, setFestas] = useState([]);
+    // const [festas, setFestas] = useState([]);
 
     const collectionRef = collection(db, "saloes");
 
     useEffect(() => {
-        const loadData = async () => {
-            setLoading(true);
-
-            const unsubscribe = () => {
-                unsub();
-            };
-            return unsubscribe;
-        };
-
         loadData();
     }, []);
+
+    const loadData = async () => {
+      setLoading(true);
+
+      const unsubscribe = () => {
+          unsub();
+      };
+      return unsubscribe;
+  };
 
     const unsub = onSnapshot(collectionRef, (snapshot) => {
         setSaloes(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
         // setFestas()
         setLoading(false);
-        loadFestas(festas)
+        // loadFestas(festas)
     });
 
 
@@ -64,14 +64,14 @@ const MostraSaloes = () => {
                   ...doc.data()
                 })
     
-                todo.details && formatDetailsDate(todo.details)
-                todo.collabs && getCollabsEmail(todo.collabs)
+                // todo.details && formatDetailsDate(todo.details)
+                // todo.collabs && getCollabsEmail(todo.collabs)
     
                 return todo;
               })
     
-            loadFestas(festas)
-            setTodos(todos)
+            // loadFestas(festas)
+            // setTodos(todos)
             setLoading(true)
           }).catch(e =>
             console.error(e)
@@ -102,18 +102,21 @@ const MostraSaloes = () => {
       }
 
     return (
+      <>
         <div className="list-saloes">
             {/* <h2>Lista de Salões:</h2> */}
             {/* <Row> */}
             <Row className="justify-content-center">
+            {/* {console.log(saloes)} */}
 
                 {saloes.length === 0 && <p>Não Existem Salões no Banco</p>}
                 {saloes.map((salao) => (
-                    <Salao key={salao.id} salao={salao} saloes={saloes}
+                  <Salao key={salao.id} salao={salao} saloes={saloes}
                     />
-                ))}
+                    ))}
             </Row>
         </div >
+      </>
     )
 }
 
