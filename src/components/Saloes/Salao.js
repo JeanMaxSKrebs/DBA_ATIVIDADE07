@@ -1,14 +1,40 @@
 import EditButton from '../Botoes/EditButton';
 import DeleteButton from '../Botoes/DeleteButton';
+import FestaFilho from '../Festas/FestaFilho';
+import { useEffect, useState } from 'react';
+import { loadData } from '../Festas/MostraFestas';
+import { db } from '../../firebase';
+import { getDocs, collection, query, where, onSnapshot } from 'firebase/firestore';
 
 import { Card, Col, Carousel } from 'react-bootstrap';
 
 const Salao = (props) => {
-
-    // console.log("entrou no salao");
+    const [festas, setFestas] = useState([]);
+    const [loading, setLoading] = useState(0);
 
     let salao = props.salao;
     let saloes = props.saloes
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+      setLoading(true);
+
+      const unsubscribe = () => {
+          unsub();
+      };
+      return unsubscribe;
+  };
+
+    const collectionRef = collection(db, "festas");
+
+    const unsub = onSnapshot(collectionRef, (snapshot) => {
+        setFestas(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
+        setLoading(false);
+      });
 
     return (
         <Col xs={12} md={6} lg={4} style={{ marginBottom: '20px' }}>
@@ -30,6 +56,21 @@ const Salao = (props) => {
                     <Card.Text>{salao.cnpj}</Card.Text>
                     <EditButton id={salao.id} saloes={saloes}></EditButton>
                     <DeleteButton id={salao.id}></DeleteButton>
+
+                    {/* {console.log(salao.id)} */}
+                    {/* {console.log(festas)} */}
+                    
+                    <Card className='salao' style={{ margin: 0, flexGrow: 1,  display: 'flex', justifyContent: 'center'}}>
+                        <div className="row">
+                            {festas.map((festa) => (
+                                console.log(salao.cnpj),
+                                console.log(festa.cnpjSalao),
+                                salao.cnpj === festa.cnpjSalao ? (
+                                            <FestaFilho key={festa.id} festa={festa} festas={festas} />
+                                ) : null
+                            ))}
+                        </div>
+                    </Card>
                 </Card.Body>
             </Card>
         </Col>

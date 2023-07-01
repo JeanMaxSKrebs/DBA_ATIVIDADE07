@@ -1,5 +1,5 @@
 import EditButtonFesta from '../Botoes/EditButtonFesta';
-import DeleteButton from '../Botoes/DeleteButton';
+import DeleteButtonFesta from '../Botoes/DeleteButtonFesta';
 
 import { Card, Col, Carousel } from 'react-bootstrap';
 
@@ -31,7 +31,7 @@ const Festa = (props) => {
                     <Card.Text>CNPJ SALÃO: {festa.cnpjSalao}</Card.Text>
                     <Card.Text>CPF CLIENTE: {festa.cpfCliente}</Card.Text>
                     <EditButtonFesta id={festa.id} festas={festas}></EditButtonFesta>
-                    <DeleteButton id={festa.id}></DeleteButton>
+                    <DeleteButtonFesta id={festa.id}></DeleteButtonFesta>
                 </Card.Body>
             </Card>
         </Col>

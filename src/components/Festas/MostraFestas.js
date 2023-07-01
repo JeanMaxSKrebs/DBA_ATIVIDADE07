@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import Festa from './Festa';
-import { collection, onSnapshot } from "firebase/firestore";
 import { db } from '../../firebase';
-
+import { getDocs, collection, query, where, onSnapshot } from 'firebase/firestore';
 
 const MostraFestas = () => {
     const [festas, setFestas] = useState([]);
@@ -48,7 +47,7 @@ const MostraFestas = () => {
                     {festas.length === 0 && <p>Não Existem Festas no Banco</p>}
                     {festas.map((festa) => (
                         // <p>{festa.id}</p>
-                        <Festa key={festa.id} festa={festa} festas={festas}/>
+                        <FestaFilho key={festa.id} festa={festa} festas={festas}/>
                         ))}
                 </Row>
             </div >
