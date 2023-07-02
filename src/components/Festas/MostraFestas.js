@@ -47,7 +47,7 @@ const MostraFestas = () => {
                     {festas.length === 0 && <p>Não Existem Festas no Banco</p>}
                     {festas.map((festa) => (
                         // <p>{festa.id}</p>
-                        <FestaFilho key={festa.id} festa={festa} festas={festas}/>
+                        <Festa key={festa.id} festa={festa} festas={festas}/>
                         ))}
                 </Row>
             </div >

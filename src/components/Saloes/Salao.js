@@ -9,32 +9,32 @@ import { getDocs, collection, query, where, onSnapshot } from 'firebase/firestor
 import { Card, Col, Carousel } from 'react-bootstrap';
 
 const Salao = (props) => {
-    const [festas, setFestas] = useState([]);
     const [loading, setLoading] = useState(0);
 
     let salao = props.salao;
     let saloes = props.saloes
+    
 
-    useEffect(() => {
-        loadData();
-    }, []);
+//     useEffect(() => {
+//         loadData();
+//     }, []);
 
-    const loadData = async () => {
-      setLoading(true);
+//     const loadData = async () => {
+//       setLoading(true);
 
-      const unsubscribe = () => {
-          unsub();
-      };
-      return unsubscribe;
-  };
+//       const unsubscribe = () => {
+//           unsub();
+//       };
+//       return unsubscribe;
+//   };
 
-    const collectionRef = collection(db, "festas");
+//     const collectionRef = collection(db, "festas");
 
-    const unsub = onSnapshot(collectionRef, (snapshot) => {
-        setFestas(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+//     const unsub = onSnapshot(collectionRef, (snapshot) => {
+//         setFestas(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
 
-        setLoading(false);
-      });
+//         setLoading(false);
+//       });
 
     return (
         <Col xs={12} md={6} lg={4} style={{ marginBottom: '20px' }}>
@@ -57,18 +57,24 @@ const Salao = (props) => {
                     <EditButton id={salao.id} saloes={saloes}></EditButton>
                     <DeleteButton id={salao.id}></DeleteButton>
 
-                    {/* {console.log(salao.id)} */}
+                    {/* {console.log(saloes)} */}
+                    {/* {console.log(salao)}
+                    {console.log("salao.festas")} */}
                     {/* {console.log(festas)} */}
                     
                     <Card className='salao' style={{ margin: 0, flexGrow: 1,  display: 'flex', justifyContent: 'center'}}>
                         <div className="row">
-                            {festas.map((festa) => (
-                                console.log(salao.cnpj),
-                                console.log(festa.cnpjSalao),
-                                salao.cnpj === festa.cnpjSalao ? (
-                                            <FestaFilho key={festa.id} festa={festa} festas={festas} />
-                                ) : null
-                            ))}
+                            {Object.keys(salao).map(chave => {
+                                const valor = salao[chave];
+                                
+                                if (Array.isArray(valor)) {
+                                return valor.map(item => (
+                                    <FestaFilho key={item.id} festa={item} festas={valor} />
+                                ));
+                                }
+                                
+                                return null;
+                            })}
                         </div>
                     </Card>
                 </Card.Body>

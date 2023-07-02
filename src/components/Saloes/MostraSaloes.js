@@ -50,16 +50,27 @@ const MostraSaloes = () => {
             return;
           }
           let festas = querySnap.docs.map(festasDoc => {
-            return festasDoc.data().cpfCliente
+            return festasDoc.data()
           })
           // console.log({ salao: salao.id, festas: festas })
-          loadFestasData(festas[0], salao.id, saloes)
+          // console.log(festas);
+          // console.log('festas');
+          let newSaloes = saloes.map(nsalao => {
+            if (nsalao.id === salao.id) {
+                // console.log('nsalao')
+                nsalao.festas = festas
+              }
+              return nsalao
+          })
+          setSaloes(newSaloes);
+          // loadFestasData(festas, salao, saloes)
         })
         .catch(e => console.error(e.message))
     })
   }
-  const loadFestasData = (festas, salaoId, saloes) => {
-    // console.log(festas);
+  const loadFestasData = (festas, salao, saloes) => {
+    // console.log(salaoId);
+    // debugger;
     // console.log('foi');
     // console.log('foi');
     // console.log('foi');
@@ -68,23 +79,29 @@ const MostraSaloes = () => {
     //where(campo,op,valor)
     let queryUser = query(
       collection(db, 'clientes'),
-      where('cpf', '==', festas)
+      where('cpf', '==', salao.cpf)
     )
     getDocs(queryUser)
       .then(festaQuerySnap => {
         // console.log(festaQuerySnap);
         if (festaQuerySnap.empty) {
-          // console.log(festaQuerySnap);
+          console.log('festaQuerySnap');
         
           return;
         }
-        let festasData = festaQuerySnap.docs.map(festasDoc => {
-          return ({ id: festasDoc.id, ...festasDoc.data() })
+        let clienteData = festaQuerySnap.docs.map(clienteDoc => {
+          return ({ id: clienteDoc.id, ...clienteDoc.data() })
         })
         let newSaloes = saloes.map(nsalao => {
-          if (nsalao.id === salaoId)
-          nsalao.festas = festasData
-          return nsalao
+          console.log(salao)
+          if (nsalao.id === salao.id) {
+              console.log(salao)
+              console.log('nsalao')
+              console.log(nsalao)
+              nsalao.festas = festas
+              nsalao.cliente = clienteData
+              return nsalao
+          }
         })
         setSaloes(newSaloes)
       })
@@ -92,8 +109,9 @@ const MostraSaloes = () => {
   }
 
     const unsub = onSnapshot(collectionRef, (snapshot) => {
-        setSaloes(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-        loadFestas(saloes)
+        // setSaloes(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+        loadFestas(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+        // loadFestas(saloes)
 
         setLoading(false);
         // loadFestas(festas)
